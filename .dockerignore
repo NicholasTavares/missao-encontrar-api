@@ -1,0 +1,12 @@
+.github
+.git
+.env
+*Dockerfile*
+*docker-compose*
+node_modules
+package-lock.json
+yarn.lock
+helmcharts
+coverage
+Makefile
+test

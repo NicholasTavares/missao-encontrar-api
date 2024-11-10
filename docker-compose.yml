@@ -1,0 +1,42 @@
+volumes:
+  db_data:
+
+
+services:
+  api:
+    build: .
+    restart: always
+    container_name: '${APP_NAME}-api'
+    depends_on:
+      db:
+        condition: service_healthy
+    ports:
+      - ${APP_PORT}:3000
+    volumes:
+      - ./src:/usr/src/app/src
+      - ./.env:/usr/src/app/.env
+    environment:
+      APP_PORT: 3000
+      DB_HOST: db
+      DB_PORT: 5432
+      DB_USERNAME: ${DB_USERNAME}
+      DB_PASSWORD: ${DB_PASSWORD}
+    command: yarn start:dev
+
+  db:
+    image: postgres:13-alpine
+    restart: always
+    container_name: '${APP_NAME}-db'
+    environment:
+      POSTGRES_USER: ${DB_USERNAME}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_DB: ${DB_NAME}
+    ports:
+      - 5432:5432
+    healthcheck:
+      test: pg_isready -U postgres -h 127.0.0.1 -d ${DB_NAME}
+      interval: 5s
+      timeout: 5s
+      retries: 5
+    volumes:
+      - db_data:/var/lib/postgresql/data
