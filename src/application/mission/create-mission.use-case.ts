@@ -1,9 +1,11 @@
 import { Injectable } from '@nestjs/common';
 import { MissionService } from '../../domain/mission/mission.service';
-import { CreateMissionDTO } from 'src/presentation/mission/mission.dto';
+import { MissionDTO } from 'src/presentation/mission/mission.dto';
 import { UserService } from 'src/domain/user/user.service';
 import { MissionCategoryService } from 'src/domain/mission-categories/mission-categories.service';
 import { EntityManager } from 'typeorm';
+import { PersonMissionService } from 'src/domain/person-mission/person-mission.service';
+import { PersonColorService } from 'src/domain/person-color/person-color.service';
 
 @Injectable()
 export class CreateMissionUseCase {
@@ -11,21 +13,27 @@ export class CreateMissionUseCase {
         private readonly missionService: MissionService,
         private readonly userService: UserService,
         private readonly missionCategoryService: MissionCategoryService,
+        private readonly personMissionService: PersonMissionService,
+        private readonly personColorService: PersonColorService,
         private readonly entityManager: EntityManager
     ) { }
 
     // TODO: pensar em como fica o status da missão ao criar
-    async execute(createMissionDTO: CreateMissionDTO) {
+    // TODO: colocar condicionais de detalhamento para cada tipo de missão
+    // TODO: repensar tabelas de colunas de categorias ao ivés de tabelas de categorias
+    // TODO: incluir sexo da pessoa
+    async execute(missionDTO: MissionDTO) {
         return await this.entityManager.transaction(async (transactionManager) => {
             try {
-                // Retrieve user within transaction
-                await this.userService.getUserById(createMissionDTO.user_id, transactionManager);
+                await this.userService.getUserById(missionDTO.mission.user_id, transactionManager);
 
-                // Retrieve mission category within transaction
-                const category = await this.missionCategoryService.getMissionCategoryById(createMissionDTO.category_id, transactionManager);
+                const category = await this.missionCategoryService.getMissionCategoryById(missionDTO.mission.category_id, transactionManager);
 
-                // Create mission within transaction
-                const mission = await this.missionService.createMission(createMissionDTO, category, transactionManager);
+                const mission = await this.missionService.createMission(missionDTO.mission, category, transactionManager);
+
+                await this.personColorService.getPersonColorById(missionDTO.mission_details.color_id, transactionManager);
+
+                await this.personMissionService.createPersonMission(missionDTO.mission_details, mission.id, transactionManager);
 
                 return mission;
             } catch (error) {

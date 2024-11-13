@@ -10,11 +10,13 @@ import {
     JoinTable,
     OneToMany,
     ManyToOne,
-    JoinColumn
+    JoinColumn,
+    OneToOne
 } from 'typeorm';
 import { MissionCategoryModel } from '../mission-categories/mission-categories.model';
 import { RewardsEditionsModel } from '../rewards-editions/rewards-editions.model';
 import { UserModel } from '../user/user.model';
+import { PersonMissionModel } from '../person-mission/person-mission.model';
 
 @Entity('missions')
 export class MissionModel implements MissionEntity {
@@ -54,6 +56,9 @@ export class MissionModel implements MissionEntity {
 
     @OneToMany(() => RewardsEditionsModel, category => category.mission)
     rewards_editions: RewardsEditionsModel[];
+
+    @OneToOne(() => PersonMissionModel, mission_details => mission_details.mission)
+    mission_details_person?: PersonMissionModel;
 
     @ManyToMany(() => MissionCategoryModel, category => category.missions)
     @JoinTable({ name: 'mission_mission_categories', joinColumn: { name: 'mission_id' }, inverseJoinColumn: { name: 'category_id' } })

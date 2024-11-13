@@ -1,4 +1,5 @@
-import { IsNotEmpty, IsNumber, IsOptional, IsString } from "class-validator";
+import { IsNotEmpty, IsNumber, IsObject, IsOptional, IsString } from "class-validator";
+import { CreatePersonMissionDTO } from "../person-mission/person-mission.dto";
 
 export class CreateMissionDTO {
     @IsNotEmpty({ message: 'Id do usuário é obrigatório.' })
@@ -34,6 +35,14 @@ export class CreateMissionDTO {
     @IsNotEmpty()
     @IsString()
     readonly category_id: string;
+};
+
+export class MissionDTO {
+    @IsObject()
+    mission: CreateMissionDTO;
+
+    @IsObject()
+    mission_details: CreatePersonMissionDTO;
 };
 
 export class UpdateMissionDTO {

@@ -1,7 +1,7 @@
 import { Body, Controller, Get, Patch, Post } from '@nestjs/common';
 import { CreateMissionUseCase } from 'src/application/mission/create-mission.use-case';
 import { GetAllMissionsUseCase } from 'src/application/mission/get-all-missions.use-case';
-import { CreateMissionDTO, UpdateMissionDTO, UpdateMissionRewardsDTO } from './mission.dto';
+import { MissionDTO, UpdateMissionDTO, UpdateMissionRewardsDTO } from './mission.dto';
 import { UpdateMissionsUseCase } from 'src/application/mission/update-mission.use-case';
 import { UpdateMissionsRewardsUseCase } from 'src/application/mission/update-mission-rewards.use-case';
 
@@ -21,7 +21,7 @@ export class MissionController {
     };
 
     @Post()
-    async createMissions(@Body() body: CreateMissionDTO) {
+    async createMissions(@Body() body: MissionDTO) {
         const mission = await this.createMissionUseCase.execute(body);
         return mission;
     };
