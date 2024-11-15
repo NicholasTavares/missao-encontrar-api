@@ -14,6 +14,10 @@ export class CreateMissionDTO {
     @IsString()
     readonly description: string;
 
+    @IsNotEmpty({ message: 'Tipo de detalhes da missão é obrigatório.' })
+    @IsString()
+    readonly mission_details_type: string;
+
     //TODO: lembrar de informar o usuário que depois não diminuir a recompensa da missão
 
     @IsNotEmpty({ message: 'Recompensa da missão é obrigatória.' })

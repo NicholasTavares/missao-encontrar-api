@@ -11,7 +11,8 @@ import {
     OneToMany,
     ManyToOne,
     JoinColumn,
-    OneToOne
+    OneToOne,
+    Relation
 } from 'typeorm';
 import { MissionCategoryModel } from '../mission-categories/mission-categories.model';
 import { RewardsEditionsModel } from '../rewards-editions/rewards-editions.model';
@@ -28,6 +29,9 @@ export class MissionModel implements MissionEntity {
 
     @Column()
     description: string;
+
+    @Column({ name: 'mission_details_type' })
+    mission_details_type: string;
 
     @Column({ name: 'initial_reward' })
     initial_reward: number;
@@ -52,17 +56,17 @@ export class MissionModel implements MissionEntity {
 
     @ManyToOne(() => UserModel, user => user.missions)
     @JoinColumn({ name: 'user_id' })
-    user: UserModel
+    user: Relation<UserModel>
 
     @OneToMany(() => RewardsEditionsModel, category => category.mission)
-    rewards_editions: RewardsEditionsModel[];
+    rewards_editions: Relation<RewardsEditionsModel>[];
 
     @OneToOne(() => PersonMissionModel, mission_details => mission_details.mission)
-    mission_details_person?: PersonMissionModel;
+    mission_details_person?: Relation<PersonMissionModel>;
 
     @ManyToMany(() => MissionCategoryModel, category => category.missions)
     @JoinTable({ name: 'mission_mission_categories', joinColumn: { name: 'mission_id' }, inverseJoinColumn: { name: 'category_id' } })
-    categories: MissionCategoryModel[];
+    categories: Relation<MissionCategoryModel>[];
 
     @CreateDateColumn({ name: 'created_at', type: 'timestamp' })
     created_at: Date;

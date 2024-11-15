@@ -19,6 +19,7 @@ describe('MissionService', () => {
         user_id: "8a93966f-b04b-4b97-8195-7cb5a53a6c1a",
         title: "Homem desaparecido",
         description: "Homem desaparecido perto do midway",
+        mission_details_type: "PERSON",
         current_reward: 1000,
         latitude: -5.810069,
         longitude: -35.204835,
@@ -52,6 +53,7 @@ describe('MissionService', () => {
         id: mission_id,
         title: "Homem desaparecido",
         description: "Homem desaparecido perto do midway",
+        mission_details_type: "PERSON",
         initial_reward: 500,
         current_reward: 500,
         latitude: -5.810069,
@@ -206,6 +208,17 @@ describe('MissionService', () => {
 
             await expect(service.createMission(dto, validMissionCategory)).rejects.toThrow(
                 `Longitude inválida.`,
+            );
+        });
+
+        it('should throw BadRequestException if mission_details_type is invalid', async () => {
+            const invalidMissionDTO: CreateMissionDTO = {
+                ...validMissionDTO,
+                mission_details_type: 'INVALID_TYPE',
+            };
+
+            await expect(service.createMission(invalidMissionDTO, validMissionCategory)).rejects.toThrow(
+                `Tipo da missão inválido: ${invalidMissionDTO.mission_details_type}.`,
             );
         });
 

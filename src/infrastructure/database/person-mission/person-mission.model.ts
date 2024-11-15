@@ -1,7 +1,6 @@
 import { PersonMissionEntity } from "src/domain/person-mission/person-mission.entity";
-import { Column, CreateDateColumn, DeleteDateColumn, Entity, JoinColumn, ManyToOne, OneToOne, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
+import { Column, CreateDateColumn, DeleteDateColumn, Entity, JoinColumn, ManyToOne, OneToOne, PrimaryGeneratedColumn, Relation, UpdateDateColumn } from "typeorm";
 import { MissionModel } from "../mission/mission.model";
-import { PersonColorModel } from "../person-color/person-color.model";
 
 @Entity('person_missions')
 export class PersonMissionModel implements PersonMissionEntity {
@@ -20,16 +19,12 @@ export class PersonMissionModel implements PersonMissionEntity {
     @Column({ name: 'mission_id' })
     mission_id: string;
 
-    @Column({ name: 'color_id' })
-    color_id: string;
+    @Column({ name: 'color' })
+    color: string;
 
     @OneToOne(() => MissionModel, mission => mission?.mission_details_person)
     @JoinColumn({ name: 'mission_id' })
-    mission: MissionModel;
-
-    @ManyToOne(() => PersonColorModel, person_color => person_color.person_mission)
-    @JoinColumn({ name: 'color_id' })
-    person_color: PersonColorModel;
+    mission: Relation<MissionModel>;
 
     @CreateDateColumn({ name: 'created_at', type: 'timestamp' })
     created_at: Date;

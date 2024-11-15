@@ -7,6 +7,7 @@ import {
     UpdateDateColumn,
     DeleteDateColumn,
     OneToMany,
+    Relation,
 } from 'typeorm';
 import { MissionModel } from '../mission/mission.model';
 
@@ -31,7 +32,7 @@ export class UserModel implements UserEntity {
     password: string;
 
     @OneToMany(() => MissionModel, mission => mission.user)
-    missions: MissionModel[];
+    missions: Relation<MissionModel>[];
 
     @Column({ name: 'birth_date', type: 'timestamp' })
     birth_date: Date;

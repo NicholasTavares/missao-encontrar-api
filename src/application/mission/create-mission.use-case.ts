@@ -5,7 +5,7 @@ import { UserService } from 'src/domain/user/user.service';
 import { MissionCategoryService } from 'src/domain/mission-categories/mission-categories.service';
 import { EntityManager } from 'typeorm';
 import { PersonMissionService } from 'src/domain/person-mission/person-mission.service';
-import { PersonColorService } from 'src/domain/person-color/person-color.service';
+import { MissionDetailsType } from 'src/domain/mission/interfaces/mission-details-type.enum';
 
 @Injectable()
 export class CreateMissionUseCase {
@@ -14,14 +14,10 @@ export class CreateMissionUseCase {
         private readonly userService: UserService,
         private readonly missionCategoryService: MissionCategoryService,
         private readonly personMissionService: PersonMissionService,
-        private readonly personColorService: PersonColorService,
         private readonly entityManager: EntityManager
     ) { }
 
     // TODO: pensar em como fica o status da missão ao criar
-    // TODO: colocar condicionais de detalhamento para cada tipo de missão
-    // TODO: repensar tabelas de colunas de categorias ao ivés de tabelas de categorias
-    // TODO: incluir sexo da pessoa
     async execute(missionDTO: MissionDTO) {
         return await this.entityManager.transaction(async (transactionManager) => {
             try {
@@ -31,9 +27,13 @@ export class CreateMissionUseCase {
 
                 const mission = await this.missionService.createMission(missionDTO.mission, category, transactionManager);
 
-                await this.personColorService.getPersonColorById(missionDTO.mission_details.color_id, transactionManager);
-
-                await this.personMissionService.createPersonMission(missionDTO.mission_details, mission.id, transactionManager);
+                switch (mission.mission_details_type) {
+                    case MissionDetailsType.PERSON:
+                        await this.personMissionService.createPersonMission(missionDTO.mission_details, mission.id, transactionManager);
+                        break;
+                    default:
+                        break;
+                };
 
                 return mission;
             } catch (error) {

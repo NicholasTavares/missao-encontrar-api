@@ -4,7 +4,7 @@ export class PersonMissionEntity {
     name: string;
     age: number;
     hair: string;
-    color_id: string;
+    color: string;
     created_at: Date;
     updated_at: Date;
     deleted_at?: Date;

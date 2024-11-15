@@ -6,6 +6,7 @@ import {
     DeleteDateColumn,
     ManyToOne,
     JoinColumn,
+    Relation,
 } from 'typeorm';
 import { MissionModel } from '../mission/mission.model';
 import { RewardsEditionsEntity } from 'src/domain/rewards-editions/rewards-editions.entity';
@@ -23,7 +24,7 @@ export class RewardsEditionsModel implements RewardsEditionsEntity {
 
     @ManyToOne(() => MissionModel, mission => mission.rewards_editions)
     @JoinColumn({ name: 'mission_id' })
-    mission: MissionModel;
+    mission: Relation<MissionModel>;
 
     @CreateDateColumn({ name: 'edited_at', type: 'timestamp' })
     edited_at: Date;

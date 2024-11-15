@@ -12,7 +12,7 @@ describe('PersonMissionService', () => {
 
     const validPersonMissionDTO: CreatePersonMissionDTO = {
         age: 11,
-        color_id: "a521bf26-562a-4efb-c802-595941433477",
+        color: "branca",
         name: "Clara de Oliveira",
         hair: "Castanho claro"
     };
@@ -52,6 +52,15 @@ describe('PersonMissionService', () => {
             };
 
             await expect(service.createPersonMission(invalidPersonMissionDTO, mission_id, undefined)).rejects.toThrow(`Nome deve ter no mínimo ${MIN_NAME_PERSON_LENGTH} caracteres.`);
+        });
+
+        it('should throw BadRequestException if color is invalid', async () => {
+            const invalidPersonDTO: CreatePersonMissionDTO = {
+                ...validPersonMissionDTO,
+                color: 'INVALID_COLOR',
+            };
+
+            await expect(service.createPersonMission(invalidPersonDTO, mission_id)).rejects.toThrow(`Cor inválida: ${invalidPersonDTO.color}.`);
         });
 
         it('should successfully create a person mission', async () => {

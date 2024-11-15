@@ -26,11 +26,6 @@ import { UpdateMissionsRewardsUseCase } from './application/mission/update-missi
 import { PersonMissionModel } from './infrastructure/database/person-mission/person-mission.model';
 import { PersonMissionService } from './domain/person-mission/person-mission.service';
 import { PersonMissionRepositoryImpl } from './infrastructure/database/person-mission/person-mission.repository';
-import { PersonColorModel } from './infrastructure/database/person-color/person-color.model';
-import { PersonColorService } from './domain/person-color/person-color.service';
-import { PersonColorRepositoryImpl } from './infrastructure/database/person-color/person-color.repository';
-import { PersonColorController } from './presentation/person-color/person-color.controller';
-import { CreatePersonColorUseCase } from './application/person-color/create-person-color.use-case';
 
 @Module({
   imports: [
@@ -41,13 +36,13 @@ import { CreatePersonColorUseCase } from './application/person-color/create-pers
       username: process.env.DB_USERNAME,
       password: process.env.DB_PASSWORD,
       database: process.env.DB_NAME,
-      entities: [MissionModel, MissionCategoryModel, PersonMissionModel, PersonColorModel, RewardsEditionsModel, UserModel],
+      entities: [MissionModel, MissionCategoryModel, PersonMissionModel, RewardsEditionsModel, UserModel],
       synchronize: true,
       logging: true,
     }),
-    TypeOrmModule.forFeature([MissionModel, MissionCategoryModel, PersonMissionModel, PersonColorModel, RewardsEditionsModel, UserModel]),
+    TypeOrmModule.forFeature([MissionModel, MissionCategoryModel, PersonMissionModel, RewardsEditionsModel, UserModel]),
   ],
-  controllers: [MissionController, MissionCategoryController, PersonColorController, UserController],
+  controllers: [MissionController, MissionCategoryController, UserController],
   providers: [
     MissionService,
     GetAllMissionsUseCase,
@@ -66,10 +61,7 @@ import { CreatePersonColorUseCase } from './application/person-color/create-pers
     UpdateMissionsUseCase,
     UpdateMissionsRewardsUseCase,
     PersonMissionService,
-    PersonMissionRepositoryImpl,
-    PersonColorService,
-    PersonColorRepositoryImpl,
-    CreatePersonColorUseCase
+    PersonMissionRepositoryImpl
   ],
 })
 export class AppModule { }

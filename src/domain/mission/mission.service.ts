@@ -1,5 +1,6 @@
 import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
 import { MissionRepositoryImpl } from 'src/infrastructure/database/mission/mission.repository';
+import { MissionDetailsType } from 'src/domain/mission/interfaces/mission-details-type.enum';
 import { CreateMissionDTO, UpdateMissionDTO, UpdateMissionRewardsDTO } from 'src/presentation/mission/mission.dto';
 import { MissionCategoryEntity } from '../mission-categories/mission-category.entity';
 import { EntityManager } from 'typeorm';
@@ -58,6 +59,11 @@ export class MissionService {
 
         if (createMissionDTO.longitude < -180 || createMissionDTO.longitude > 180) {
             throw new BadRequestException('Longitude inválida.');
+        };
+
+
+        if (!Object.values(MissionDetailsType).includes(createMissionDTO.mission_details_type as MissionDetailsType)) {
+            throw new BadRequestException(`Tipo da missão inválido: ${createMissionDTO.mission_details_type}.`);
         };
 
         const created_mission = this.missionRepository.createMission({

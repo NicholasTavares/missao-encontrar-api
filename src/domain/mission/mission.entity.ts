@@ -3,6 +3,7 @@ export class MissionEntity {
     user_id: string;
     title: string;
     description: string;
+    mission_details_type: string;
     initial_reward: number;
     current_reward: number;
     lowest_reward?: number;

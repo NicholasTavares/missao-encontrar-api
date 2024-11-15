@@ -7,6 +7,7 @@ import {
     UpdateDateColumn,
     DeleteDateColumn,
     ManyToMany,
+    Relation,
 } from 'typeorm';
 import { MissionModel } from '../mission/mission.model';
 
@@ -25,7 +26,7 @@ export class MissionCategoryModel implements MissionCategoryEntity {
     description: string;
 
     @ManyToMany(() => MissionModel, mission => mission.categories)
-    missions: MissionModel[];
+    missions: Relation<MissionModel>[];
 
     @CreateDateColumn({ name: 'created_at', type: 'timestamp' })
     created_at: Date;
