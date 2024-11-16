@@ -18,6 +18,7 @@ import { MissionCategoryModel } from '../mission-categories/mission-categories.m
 import { RewardsEditionsModel } from '../rewards-editions/rewards-editions.model';
 import { UserModel } from '../user/user.model';
 import { PersonMissionModel } from '../person-mission/person-mission.model';
+import { PetMissionModel } from '../pet-mission/pet-mission.model';
 
 @Entity('missions')
 export class MissionModel implements MissionEntity {
@@ -63,6 +64,9 @@ export class MissionModel implements MissionEntity {
 
     @OneToOne(() => PersonMissionModel, mission_details => mission_details.mission)
     mission_details_person?: Relation<PersonMissionModel>;
+
+    @OneToOne(() => PetMissionModel, mission_details => mission_details.mission)
+    mission_details_pet?: Relation<PetMissionModel>;
 
     @ManyToMany(() => MissionCategoryModel, category => category.missions)
     @JoinTable({ name: 'mission_mission_categories', joinColumn: { name: 'mission_id' }, inverseJoinColumn: { name: 'category_id' } })

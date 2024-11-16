@@ -9,6 +9,8 @@ export class PersonMissionService {
     private readonly MIN_NAME_PERSON_LENGTH = 3;
     constructor(private readonly personMissionRepository: PersonMissionRepositoryImpl) { }
 
+    // TODO: criar getPersonMissionByMissionId
+
     async createPersonMission(createPersonMissionDTO: CreatePersonMissionDTO, mission_id: string, transactionManager?: EntityManager) {
         if (createPersonMissionDTO.name.length < this.MIN_NAME_PERSON_LENGTH) {
             throw new BadRequestException(`Nome deve ter no mínimo ${this.MIN_NAME_PERSON_LENGTH} caracteres.`);

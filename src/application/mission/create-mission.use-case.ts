@@ -6,6 +6,7 @@ import { MissionCategoryService } from 'src/domain/mission-categories/mission-ca
 import { EntityManager } from 'typeorm';
 import { PersonMissionService } from 'src/domain/person-mission/person-mission.service';
 import { MissionDetailsType } from 'src/domain/mission/interfaces/mission-details-type.enum';
+import { PetMissionService } from 'src/domain/pet-mission/pet-mission.service';
 
 @Injectable()
 export class CreateMissionUseCase {
@@ -14,6 +15,7 @@ export class CreateMissionUseCase {
         private readonly userService: UserService,
         private readonly missionCategoryService: MissionCategoryService,
         private readonly personMissionService: PersonMissionService,
+        private readonly petMissionService: PetMissionService,
         private readonly entityManager: EntityManager
     ) { }
 
@@ -29,7 +31,12 @@ export class CreateMissionUseCase {
 
                 switch (mission.mission_details_type) {
                     case MissionDetailsType.PERSON:
-                        await this.personMissionService.createPersonMission(missionDTO.mission_details, mission.id, transactionManager);
+                        await this.personMissionService.createPersonMission(missionDTO.mission_details_person, mission.id, transactionManager);
+                        break;
+                    case MissionDetailsType.PET:
+                        await this.petMissionService.createPetMission(missionDTO.mission_details_pet, mission.id, transactionManager);
+                        break;
+                    case MissionDetailsType.OBJECT:
                         break;
                     default:
                         break;

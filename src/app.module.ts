@@ -26,6 +26,9 @@ import { UpdateMissionsRewardsUseCase } from './application/mission/update-missi
 import { PersonMissionModel } from './infrastructure/database/person-mission/person-mission.model';
 import { PersonMissionService } from './domain/person-mission/person-mission.service';
 import { PersonMissionRepositoryImpl } from './infrastructure/database/person-mission/person-mission.repository';
+import { PetMissionModel } from './infrastructure/database/pet-mission/pet-mission.model';
+import { PetMissionService } from './domain/pet-mission/pet-mission.service';
+import { PetMissionRepositoryImpl } from './infrastructure/database/pet-mission/pet-mission.repository';
 
 @Module({
   imports: [
@@ -36,11 +39,11 @@ import { PersonMissionRepositoryImpl } from './infrastructure/database/person-mi
       username: process.env.DB_USERNAME,
       password: process.env.DB_PASSWORD,
       database: process.env.DB_NAME,
-      entities: [MissionModel, MissionCategoryModel, PersonMissionModel, RewardsEditionsModel, UserModel],
+      entities: [MissionModel, MissionCategoryModel, PersonMissionModel, PetMissionModel, RewardsEditionsModel, UserModel],
       synchronize: true,
       logging: true,
     }),
-    TypeOrmModule.forFeature([MissionModel, MissionCategoryModel, PersonMissionModel, RewardsEditionsModel, UserModel]),
+    TypeOrmModule.forFeature([MissionModel, MissionCategoryModel, PersonMissionModel, PetMissionModel, RewardsEditionsModel, UserModel]),
   ],
   controllers: [MissionController, MissionCategoryController, UserController],
   providers: [
@@ -61,7 +64,9 @@ import { PersonMissionRepositoryImpl } from './infrastructure/database/person-mi
     UpdateMissionsUseCase,
     UpdateMissionsRewardsUseCase,
     PersonMissionService,
-    PersonMissionRepositoryImpl
+    PersonMissionRepositoryImpl,
+    PetMissionService,
+    PetMissionRepositoryImpl
   ],
 })
 export class AppModule { }
