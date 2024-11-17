@@ -44,6 +44,31 @@ describe('PersonMissionService', () => {
         expect(repository).toBeDefined();
     });
 
+
+    describe('getPersonMissionByMissionId', () => {
+        it('should throw an error if person mission is not found', async () => {
+            jest.spyOn(repository, 'getPersonMissionByMissionId').mockResolvedValue(null);
+
+            await expect(service.getPersonMissionByMissionId(mission_id)).rejects.toThrow(`Missão com id ${mission_id} não encontrada.`);
+        });
+
+        it('should return a person mission', async () => {
+            const personMission = {
+                id: 'e171bb26-444a-4ffb-b802-595941433460',
+                age: 11,
+                color: "branca",
+                name: "Clara de Oliveira",
+                hair: "Castanho claro"
+            };
+
+            jest.spyOn(repository, 'getPersonMissionByMissionId').mockResolvedValue(personMission as any);
+
+            const result = await service.getPersonMissionByMissionId(mission_id);
+
+            expect(result).toEqual(personMission);
+        });
+    });
+
     describe('createPersonMission', () => {
         it('should throw an error if name is less than 3 characters', async () => {
             const invalidPersonMissionDTO = {

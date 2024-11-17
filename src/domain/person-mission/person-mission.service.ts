@@ -9,7 +9,15 @@ export class PersonMissionService {
     private readonly MIN_NAME_PERSON_LENGTH = 3;
     constructor(private readonly personMissionRepository: PersonMissionRepositoryImpl) { }
 
-    // TODO: criar getPersonMissionByMissionId
+    async getPersonMissionByMissionId(mission_id: string) {
+        const person_mission = await this.personMissionRepository.getPersonMissionByMissionId(mission_id);
+
+        if (!person_mission) {
+            throw new BadRequestException(`Missão com id ${mission_id} não encontrada.`);
+        };
+
+        return person_mission;
+    }
 
     async createPersonMission(createPersonMissionDTO: CreatePersonMissionDTO, mission_id: string, transactionManager?: EntityManager) {
         if (createPersonMissionDTO.name.length < this.MIN_NAME_PERSON_LENGTH) {

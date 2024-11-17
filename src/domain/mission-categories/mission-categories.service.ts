@@ -20,6 +20,7 @@ export class MissionCategoryService {
         return category;
     };
 
+    // TODO: esclarecer melhor o level da missão e se precisa ser único
     async createMissionCategory(createMissionCategoryDTO: CreateMissionCategoryDTO) {
         if (createMissionCategoryDTO.category.length < this.MIN_CATEGORY_LENGTH) {
             throw new BadRequestException(`Categoria da missão deve ter no mínimo ${this.MIN_CATEGORY_LENGTH} caracteres.`);

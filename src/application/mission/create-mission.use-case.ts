@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable } from '@nestjs/common';
 import { MissionService } from '../../domain/mission/mission.service';
 import { MissionDTO } from 'src/presentation/mission/mission.dto';
 import { UserService } from 'src/domain/user/user.service';
@@ -26,6 +26,11 @@ export class CreateMissionUseCase {
                 await this.userService.getUserById(missionDTO.mission.user_id, transactionManager);
 
                 const category = await this.missionCategoryService.getMissionCategoryById(missionDTO.mission.category_id, transactionManager);
+
+                //REMENBER: cadastrar na tabela de categorias os valores iguais a mission_details_type
+                if (category.category.toUpperCase() !== missionDTO.mission.mission_details_type.toUpperCase()) {
+                    throw new BadRequestException('Categoria inválida.');
+                };
 
                 const mission = await this.missionService.createMission(missionDTO.mission, category, transactionManager);
 

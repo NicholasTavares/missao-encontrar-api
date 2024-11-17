@@ -1,7 +1,31 @@
-import { IsNotEmpty, IsNumber, IsObject, IsOptional, IsString } from "class-validator";
+import { IsNotEmpty, IsNumber, IsObject, IsOptional, IsString, registerDecorator } from "class-validator";
 import { CreatePersonMissionDTO } from "../person-mission/person-mission.dto";
 import { CreatePetMissionDTO } from "../pet-mission/pet-mission.dto";
 
+export function AtLeastOne(validationOptions?: any) {
+    return function (object: any, propertyName: string) {
+        registerDecorator({
+            name: 'atLeastOne',
+            target: object.constructor,
+            propertyName: propertyName,
+            options: validationOptions,
+            validator: {
+                validate(value: any) {
+                    const mission_details_person = value[0];
+                    const mission_details_pet = value[1];
+                    console.log(mission_details_person, mission_details_pet);
+
+                    if (!mission_details_person && !mission_details_pet) return false;
+
+                    return true;
+                },
+                defaultMessage() {
+                    return 'Pelo menos um dos detalhes da missão (pessoa ou pet) deve ser fornecido.';
+                }
+            }
+        });
+    };
+}
 export class CreateMissionDTO {
     @IsNotEmpty({ message: 'Id do usuário é obrigatório.' })
     @IsString()
@@ -42,16 +66,23 @@ export class CreateMissionDTO {
     readonly category_id: string;
 };
 
-
+// TODO: ver se é importante validar se mission_details_person e mission_details_pet não podem ser fornecidos ao mesmo tempo
 export class MissionDTO {
     @IsObject()
     mission: CreateMissionDTO;
 
+    @IsOptional()
     @IsObject()
-    mission_details_person: CreatePersonMissionDTO;
+    mission_details_person?: CreatePersonMissionDTO;
 
+    @IsOptional()
     @IsObject()
-    mission_details_pet: CreatePetMissionDTO;
+    mission_details_pet?: CreatePetMissionDTO;
+
+    @AtLeastOne()
+    get MissionDetailsValidation(): [CreatePersonMissionDTO, CreatePetMissionDTO] {
+        return [this.mission_details_person, this.mission_details_pet];
+    }
 };
 
 export class UpdateMissionDTO {
@@ -77,7 +108,6 @@ export class UpdateMissionDTO {
     @IsNumber()
     readonly longitude?: number;
 };
-
 export class UpdateMissionRewardsDTO {
     @IsNotEmpty({ message: 'Id da missão é obrigatório.' })
     @IsString()

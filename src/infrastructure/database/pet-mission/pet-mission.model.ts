@@ -14,9 +14,6 @@ export class PetMissionModel implements PetMissionEntity {
     age: number;
 
     @Column()
-    color: string;
-
-    @Column()
     sex: string;
 
     @Column({ name: 'predominant_color' })
