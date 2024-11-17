@@ -1,5 +1,5 @@
 import { PersonMissionEntity } from "src/domain/person-mission/person-mission.entity";
-import { Column, CreateDateColumn, DeleteDateColumn, Entity, JoinColumn, ManyToOne, OneToOne, PrimaryGeneratedColumn, Relation, UpdateDateColumn } from "typeorm";
+import { Column, CreateDateColumn, DeleteDateColumn, Entity, JoinColumn, OneToOne, PrimaryGeneratedColumn, Relation, UpdateDateColumn } from "typeorm";
 import { MissionModel } from "../mission/mission.model";
 
 @Entity('person_missions')
@@ -12,6 +12,9 @@ export class PersonMissionModel implements PersonMissionEntity {
 
     @Column()
     age: number;
+
+    @Column()
+    gender: string;
 
     @Column()
     hair: string;

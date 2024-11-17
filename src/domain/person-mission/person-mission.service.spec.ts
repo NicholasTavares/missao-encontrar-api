@@ -13,6 +13,7 @@ describe('PersonMissionService', () => {
     const validPersonMissionDTO: CreatePersonMissionDTO = {
         age: 11,
         color: "branca",
+        gender: "feminino",
         name: "Clara de Oliveira",
         hair: "Castanho claro"
     };
@@ -86,6 +87,15 @@ describe('PersonMissionService', () => {
             };
 
             await expect(service.createPersonMission(invalidPersonDTO, mission_id)).rejects.toThrow(`Cor inválida: ${invalidPersonDTO.color}.`);
+        });
+
+        it('should throw BadRequestException if gender is invalid', async () => {
+            const invalidPersonDTO: CreatePersonMissionDTO = {
+                ...validPersonMissionDTO,
+                gender: 'INVALID_GENDER',
+            };
+
+            await expect(service.createPersonMission(invalidPersonDTO, mission_id)).rejects.toThrow(`Gênero inválido: ${invalidPersonDTO.gender}.`);
         });
 
         it('should successfully create a person mission', async () => {

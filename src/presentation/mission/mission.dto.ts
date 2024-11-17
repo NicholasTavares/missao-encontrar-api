@@ -13,7 +13,6 @@ export function AtLeastOne(validationOptions?: any) {
                 validate(value: any) {
                     const mission_details_person = value[0];
                     const mission_details_pet = value[1];
-                    console.log(mission_details_person, mission_details_pet);
 
                     if (!mission_details_person && !mission_details_pet) return false;
 

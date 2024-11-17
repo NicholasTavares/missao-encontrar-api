@@ -3,6 +3,7 @@ import { PersonMissionRepositoryImpl } from "src/infrastructure/database/person-
 import { CreatePersonMissionDTO } from "src/presentation/person-mission/person-mission.dto";
 import { EntityManager } from "typeorm";
 import { PersonColor } from "./interfaces/person-color.enum";
+import { PersonGender } from "./interfaces/person-gender.enum";
 
 @Injectable()
 export class PersonMissionService {
@@ -25,9 +26,14 @@ export class PersonMissionService {
         };
 
         createPersonMissionDTO.color = createPersonMissionDTO.color.toUpperCase();
+        createPersonMissionDTO.gender = createPersonMissionDTO.gender.toUpperCase();
 
         if (!Object.values(PersonColor).includes(createPersonMissionDTO.color as PersonColor)) {
             throw new BadRequestException(`Cor inválida: ${createPersonMissionDTO.color}.`);
+        };
+
+        if (!Object.values(PersonGender).includes(createPersonMissionDTO.gender as PersonGender)) {
+            throw new BadRequestException(`Gênero inválido: ${createPersonMissionDTO.gender}.`);
         };
 
         const created_person_mission = this.personMissionRepository.createPersonMission(createPersonMissionDTO);

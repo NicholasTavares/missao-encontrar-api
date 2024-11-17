@@ -3,6 +3,7 @@ export class PersonMissionEntity {
     mission_id: string;
     name: string;
     age: number;
+    gender: string;
     hair: string;
     color: string;
     created_at: Date;
