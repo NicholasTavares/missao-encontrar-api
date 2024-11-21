@@ -13,6 +13,7 @@ export class MissionCategoriesRepositoryImpl implements MissionCategoriesReposit
         private readonly missionRepository: Repository<MissionCategoryModel>,
     ) { }
 
+    // TODO: implementar e testar
     async getAllMissionCategories(): Promise<MissionCategoryEntity[]> {
         throw new Error('Method not implemented.');
     };

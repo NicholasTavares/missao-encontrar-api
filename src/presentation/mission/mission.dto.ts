@@ -1,6 +1,7 @@
 import { IsNotEmpty, IsNumber, IsObject, IsOptional, IsString, registerDecorator } from "class-validator";
 import { CreatePersonMissionDTO } from "../person-mission/person-mission.dto";
 import { CreatePetMissionDTO } from "../pet-mission/pet-mission.dto";
+import { CreateObjectMissionDTO } from "../object-mission/object-mission.dto";
 
 export function AtLeastOne(validationOptions?: any) {
     return function (object: any, propertyName: string) {
@@ -13,13 +14,14 @@ export function AtLeastOne(validationOptions?: any) {
                 validate(value: any) {
                     const mission_details_person = value[0];
                     const mission_details_pet = value[1];
+                    const mission_details_object = value[2];
 
-                    if (!mission_details_person && !mission_details_pet) return false;
+                    if (!mission_details_person && !mission_details_pet && !mission_details_object) return false;
 
                     return true;
                 },
                 defaultMessage() {
-                    return 'Pelo menos um dos detalhes da missão (pessoa ou pet) deve ser fornecido.';
+                    return 'Pelo menos um dos detalhes da missão (pessoa, pet ou objeto) deve ser fornecido.';
                 }
             }
         });
@@ -78,9 +80,13 @@ export class MissionDTO {
     @IsObject()
     mission_details_pet?: CreatePetMissionDTO;
 
+    @IsOptional()
+    @IsObject()
+    mission_details_object?: CreateObjectMissionDTO;
+
     @AtLeastOne()
-    get MissionDetailsValidation(): [CreatePersonMissionDTO, CreatePetMissionDTO] {
-        return [this.mission_details_person, this.mission_details_pet];
+    get MissionDetailsValidation(): [CreatePersonMissionDTO, CreatePetMissionDTO, CreateObjectMissionDTO] {
+        return [this.mission_details_person, this.mission_details_pet, this.mission_details_object];
     }
 };
 

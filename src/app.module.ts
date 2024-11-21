@@ -29,6 +29,15 @@ import { PersonMissionRepositoryImpl } from './infrastructure/database/person-mi
 import { PetMissionModel } from './infrastructure/database/pet-mission/pet-mission.model';
 import { PetMissionService } from './domain/pet-mission/pet-mission.service';
 import { PetMissionRepositoryImpl } from './infrastructure/database/pet-mission/pet-mission.repository';
+import { ObjectMissionModel } from './infrastructure/database/object-mission/object-mission.model';
+import { ObjectMissionService } from './domain/object-mission/object-mission.service';
+import { ObjectMissionRepositoryImpl } from './infrastructure/database/object-mission/object-mission.repository';
+import { ObjectMissionCategoryModel } from './infrastructure/database/object-mission-categories/object-mission-categories.model';
+import { ObjectMissionCategoryRepositoryImpl } from './infrastructure/database/object-mission-categories/object-mission-categories.repository';
+import { ObjectMissionCategoriesService } from './domain/object-mission-categories/object-mission-categories.service';
+import { ObjectMissionCategoryController } from './presentation/object-mission-categories/object-mission-categories.controller';
+import { CreateObjectMissionCategoryUseCase } from './application/object-mission-categories/create-object-mission-category.use-case';
+import { UpdateObjectMissionCategoryUseCase } from './application/object-mission-categories/update-object-mission-category.use-case';
 
 @Module({
   imports: [
@@ -39,13 +48,31 @@ import { PetMissionRepositoryImpl } from './infrastructure/database/pet-mission/
       username: process.env.DB_USERNAME,
       password: process.env.DB_PASSWORD,
       database: process.env.DB_NAME,
-      entities: [MissionModel, MissionCategoryModel, PersonMissionModel, PetMissionModel, RewardsEditionsModel, UserModel],
+      entities: [
+        MissionModel,
+        MissionCategoryModel,
+        PersonMissionModel,
+        PetMissionModel,
+        ObjectMissionModel,
+        ObjectMissionCategoryModel,
+        RewardsEditionsModel,
+        UserModel
+      ],
       synchronize: true,
       logging: true,
     }),
-    TypeOrmModule.forFeature([MissionModel, MissionCategoryModel, PersonMissionModel, PetMissionModel, RewardsEditionsModel, UserModel]),
+    TypeOrmModule.forFeature([
+      MissionModel,
+      MissionCategoryModel,
+      PersonMissionModel,
+      PetMissionModel,
+      ObjectMissionModel,
+      ObjectMissionCategoryModel,
+      RewardsEditionsModel,
+      UserModel
+    ]),
   ],
-  controllers: [MissionController, MissionCategoryController, UserController],
+  controllers: [MissionController, MissionCategoryController, UserController, ObjectMissionCategoryController],
   providers: [
     MissionService,
     GetAllMissionsUseCase,
@@ -66,7 +93,13 @@ import { PetMissionRepositoryImpl } from './infrastructure/database/pet-mission/
     PersonMissionService,
     PersonMissionRepositoryImpl,
     PetMissionService,
-    PetMissionRepositoryImpl
+    PetMissionRepositoryImpl,
+    ObjectMissionService,
+    ObjectMissionRepositoryImpl,
+    ObjectMissionCategoriesService,
+    ObjectMissionCategoryRepositoryImpl,
+    CreateObjectMissionCategoryUseCase,
+    UpdateObjectMissionCategoryUseCase
   ],
 })
 export class AppModule { }
