@@ -18,6 +18,7 @@ describe('UserService', () => {
         phone: '1234567890',
         birth_date: new Date('1990-01-01'),
         password: 'Password@123',
+        gender: 'masculino',
     };
     const user_id = '3e984c39-421e-4550-bc14-52ea36de9ad8';
 
@@ -87,6 +88,14 @@ describe('UserService', () => {
 
             await expect(service.createUser(dto)).rejects.toThrow(
                 `O usuário deve ter pelo menos ${MIN_USER_AGE} anos.`,
+            );
+        });
+
+        it(`should throw BadRequestException if gender is invalid`, async () => {
+            const dto = { ...validUserDTO, gender: 'invalid_gender' };
+
+            await expect(service.createUser(dto)).rejects.toThrow(
+                `Gênero inválido: ${dto.gender}.`,
             );
         });
 

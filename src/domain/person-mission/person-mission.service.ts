@@ -32,7 +32,7 @@ export class PersonMissionService {
             throw new BadRequestException(`Cor inválida: ${createPersonMissionDTO.color}.`);
         };
 
-        if (!Object.values(PersonGender).includes(createPersonMissionDTO.gender as PersonGender)) {
+        if (!Object.values(PersonGender).includes(createPersonMissionDTO.gender.toLowerCase() as PersonGender)) {
             throw new BadRequestException(`Gênero inválido: ${createPersonMissionDTO.gender}.`);
         };
 

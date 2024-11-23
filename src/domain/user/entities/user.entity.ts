@@ -6,6 +6,7 @@ export class UserEntity {
     phone: string;
     password: string;
     birth_date: Date;
+    gender: string;
     created_at: Date;
     updated_at: Date;
     deleted_at?: Date;

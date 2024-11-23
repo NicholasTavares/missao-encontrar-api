@@ -37,6 +37,9 @@ export class UserModel implements UserEntity {
     @Column({ name: 'birth_date', type: 'timestamp' })
     birth_date: Date;
 
+    @Column()
+    gender: string;
+
     @CreateDateColumn({ name: 'created_at', type: 'timestamp' })
     created_at: Date;
 

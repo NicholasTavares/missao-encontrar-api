@@ -2,6 +2,7 @@ import { BadRequestException, Injectable, NotFoundException } from '@nestjs/comm
 import { UserRepositoryImpl } from 'src/infrastructure/database/user/user.repository';
 import { CreateUserDTO } from 'src/presentation/user/user.dto';
 import { EntityManager } from 'typeorm';
+import { PersonGender } from '../person-mission/interfaces/person-gender.enum';
 
 @Injectable()
 export class UserService {
@@ -22,6 +23,10 @@ export class UserService {
 
         if (!createUserDTO.email.includes('@')) {
             throw new BadRequestException('Email inválido.');
+        };
+
+        if (!Object.values(PersonGender).includes(createUserDTO.gender.toLowerCase() as PersonGender)) {
+            throw new BadRequestException(`Gênero inválido: ${createUserDTO.gender}.`);
         };
 
         const today = new Date();

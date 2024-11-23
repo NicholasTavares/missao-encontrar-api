@@ -24,4 +24,8 @@ export class CreateUserDTO {
     @IsNotEmpty({ message: 'Data de nascimento é obrigatória.' })
     @IsDateString()
     birth_date: Date;
+
+    @IsNotEmpty({ message: 'Gênero é obrigatório.' })
+    @IsString()
+    gender: string;
 }
