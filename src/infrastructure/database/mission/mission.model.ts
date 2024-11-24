@@ -20,6 +20,7 @@ import { UserModel } from '../user/user.model';
 import { PersonMissionModel } from '../person-mission/person-mission.model';
 import { PetMissionModel } from '../pet-mission/pet-mission.model';
 import { ObjectMissionModel } from '../object-mission/object-mission.model';
+import { MissionTimelineModel } from '../mission-timeline/mission-timeline.model';
 
 @Entity('missions')
 export class MissionModel implements MissionEntity {
@@ -71,6 +72,9 @@ export class MissionModel implements MissionEntity {
 
     @OneToOne(() => ObjectMissionModel, mission_details => mission_details.mission)
     mission_details_object?: Relation<ObjectMissionModel>;
+
+    @OneToMany(() => MissionTimelineModel, mission_timeline => mission_timeline.mission)
+    mission_timeline?: Relation<MissionTimelineModel>[];
 
     @ManyToMany(() => MissionCategoryModel, category => category.missions)
     @JoinTable({ name: 'mission_mission_categories', joinColumn: { name: 'mission_id' }, inverseJoinColumn: { name: 'category_id' } })

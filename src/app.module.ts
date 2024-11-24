@@ -38,6 +38,13 @@ import { ObjectMissionCategoriesService } from './domain/object-mission-categori
 import { ObjectMissionCategoryController } from './presentation/object-mission-categories/object-mission-categories.controller';
 import { CreateObjectMissionCategoryUseCase } from './application/object-mission-categories/create-object-mission-category.use-case';
 import { UpdateObjectMissionCategoryUseCase } from './application/object-mission-categories/update-object-mission-category.use-case';
+import { MissionTimelineModel } from './infrastructure/database/mission-timeline/mission-timeline.model';
+import { MissionTimelineRepositoryImpl } from './infrastructure/database/mission-timeline/mission-timeline.repository';
+import { MissionTimelineController } from './presentation/mission-timeline/mission-timeline.controller';
+import { MissionTimelineService } from './domain/mission-timeline/mission-timeline.service';
+import { CreateMissionTimelineUseCase } from './application/mission-timeline/create-mission-timeline.use-case';
+import { GetMissionTimelineUseCase } from './application/mission-timeline/get-mission-timeline.use-case';
+import { UpdateMissionTimelineUseCase } from './application/mission-timeline/update-mission-timeline.use-case';
 
 @Module({
   imports: [
@@ -56,7 +63,8 @@ import { UpdateObjectMissionCategoryUseCase } from './application/object-mission
         ObjectMissionModel,
         ObjectMissionCategoryModel,
         RewardsEditionsModel,
-        UserModel
+        UserModel,
+        MissionTimelineModel
       ],
       synchronize: true,
       logging: true,
@@ -69,10 +77,11 @@ import { UpdateObjectMissionCategoryUseCase } from './application/object-mission
       ObjectMissionModel,
       ObjectMissionCategoryModel,
       RewardsEditionsModel,
-      UserModel
+      UserModel,
+      MissionTimelineModel
     ]),
   ],
-  controllers: [MissionController, MissionCategoryController, UserController, ObjectMissionCategoryController],
+  controllers: [MissionController, MissionCategoryController, UserController, ObjectMissionCategoryController, MissionTimelineController],
   providers: [
     MissionService,
     GetAllMissionsUseCase,
@@ -99,7 +108,12 @@ import { UpdateObjectMissionCategoryUseCase } from './application/object-mission
     ObjectMissionCategoriesService,
     ObjectMissionCategoryRepositoryImpl,
     CreateObjectMissionCategoryUseCase,
-    UpdateObjectMissionCategoryUseCase
+    UpdateObjectMissionCategoryUseCase,
+    MissionTimelineRepositoryImpl,
+    MissionTimelineService,
+    CreateMissionTimelineUseCase,
+    GetMissionTimelineUseCase,
+    UpdateMissionTimelineUseCase
   ],
 })
 export class AppModule { }

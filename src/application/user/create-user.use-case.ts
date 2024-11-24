@@ -9,7 +9,6 @@ export class CreateUserUseCase {
         private readonly userService: UserService
     ) { }
 
-    // TODO: incluir sexo da pessoa
     async execute(createUserDTO: CreateUserDTO): Promise<UserEntity> {
         const user = await this.userService.createUser(createUserDTO);
         return user;

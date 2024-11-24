@@ -10,6 +10,7 @@ import {
     Relation,
 } from 'typeorm';
 import { MissionModel } from '../mission/mission.model';
+import { MissionTimelineModel } from '../mission-timeline/mission-timeline.model';
 
 @Entity('users')
 export class UserModel implements UserEntity {
@@ -33,6 +34,9 @@ export class UserModel implements UserEntity {
 
     @OneToMany(() => MissionModel, mission => mission.user)
     missions: Relation<MissionModel>[];
+
+    @OneToMany(() => MissionTimelineModel, mission_timeline => mission_timeline.user)
+    missions_timeline: Relation<MissionTimelineModel>[];
 
     @Column({ name: 'birth_date', type: 'timestamp' })
     birth_date: Date;

@@ -18,8 +18,8 @@ export class MissionRepositoryImpl implements MissionRepository {
     // TODO: depois diferenciar um métodos para trazer mais detalhes da missão em busca por id
     async getMissionById(mission_id: string, transactionManager?: EntityManager): Promise<MissionEntity | null> {
         return transactionManager
-            ? transactionManager.findOne(MissionModel, { where: { id: mission_id } })
-            : this.missionRepository.findOne({ where: { id: mission_id } });
+            ? await transactionManager.findOne(MissionModel, { where: { id: mission_id } })
+            : await this.missionRepository.findOne({ where: { id: mission_id } });
     }
 
     async getAllMissions(): Promise<MissionEntity[]> {

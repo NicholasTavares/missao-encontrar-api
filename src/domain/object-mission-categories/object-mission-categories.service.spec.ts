@@ -39,7 +39,6 @@ describe('ObjectMissionCategoriesService', () => {
         expect(repository).toBeDefined();
     });
 
-
     describe('getMissionCategoryById', () => {
         it('should return a category', async () => {
             const category = {
