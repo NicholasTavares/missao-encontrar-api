@@ -48,6 +48,7 @@ describe('MissionTimelineService', () => {
                 {
                     provide: MissionTimelineRepositoryImpl,
                     useValue: {
+                        getMissionTimelineById: jest.fn(),
                         getAllMissionsTimelineByMissionId: jest.fn(),
                         updateMissionTimeline: jest.fn(),
                         createMissionTimeline: jest.fn(),
@@ -67,6 +68,17 @@ describe('MissionTimelineService', () => {
 
     it('repository should be defined', () => {
         expect(repository).toBeDefined();
+    });
+
+    describe('getMissionTimelineById', () => {
+        it('should return a time line mission', async () => {
+            jest.spyOn(repository, 'getMissionTimelineById').mockResolvedValueOnce(validMissionTimeline as any);
+
+            const result = await service.getMissionTimelineById(mission_id);
+
+            expect(repository.getMissionTimelineById).toHaveBeenCalledWith(mission_id);
+            expect(result).toEqual(validMissionTimeline);
+        });
     });
 
     describe('getMissionTimelineByMissionId', () => {
@@ -142,6 +154,21 @@ describe('MissionTimelineService', () => {
             );
         });
 
+        it(`should throw BadRequestException if update_type is invalid`, async () => {
+            const dto = { ...validMissionTimeline, update_type: 'test' }
+
+            await expect(service.updateMissionTimeline(missionTimelineEntity, dto)).rejects.toThrow(
+                `Tipo inválido de timeline: ${dto.update_type}.`,
+            );
+        });
+
+        it(`should throw BadRequestException if visibility lenght is invalid`, async () => {
+            const dto = { ...validMissionTimeline, visibility: 'test' }
+
+            await expect(service.updateMissionTimeline(missionTimelineEntity, dto)).rejects.toThrow(
+                `Tipo inválido de visibilidade timeline: ${dto.visibility}.`,
+            );
+        });
 
         it('should update a mission timeline successfully', async () => {
             jest.spyOn(repository, 'saveMissionTimeline').mockResolvedValueOnce(validUpdateMissionTimeline as any);

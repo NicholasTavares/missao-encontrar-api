@@ -45,6 +45,12 @@ import { MissionTimelineService } from './domain/mission-timeline/mission-timeli
 import { CreateMissionTimelineUseCase } from './application/mission-timeline/create-mission-timeline.use-case';
 import { GetMissionTimelineUseCase } from './application/mission-timeline/get-mission-timeline.use-case';
 import { UpdateMissionTimelineUseCase } from './application/mission-timeline/update-mission-timeline.use-case';
+import { MissionFollowerModel } from './infrastructure/database/mission-followers/mission-followers.model';
+import { MissionFollowersRepositoryImpl } from './infrastructure/database/mission-followers/mission-followers.repository';
+import { MissionFollowersController } from './presentation/mission-followers/mission-followers.controller';
+import { MissionFollowersService } from './domain/mission-followers/mission-followers.service';
+import { HandleMissionFollowerUseCase } from './application/mission-followers/handle-mission-follower.use-case';
+import { GetMissionFollowersCountUseCase } from './application/mission-followers/get-misson-followers-count.use-case';
 
 @Module({
   imports: [
@@ -64,7 +70,8 @@ import { UpdateMissionTimelineUseCase } from './application/mission-timeline/upd
         ObjectMissionCategoryModel,
         RewardsEditionsModel,
         UserModel,
-        MissionTimelineModel
+        MissionTimelineModel,
+        MissionFollowerModel
       ],
       synchronize: true,
       logging: true,
@@ -78,10 +85,18 @@ import { UpdateMissionTimelineUseCase } from './application/mission-timeline/upd
       ObjectMissionCategoryModel,
       RewardsEditionsModel,
       UserModel,
-      MissionTimelineModel
+      MissionTimelineModel,
+      MissionFollowerModel
     ]),
   ],
-  controllers: [MissionController, MissionCategoryController, UserController, ObjectMissionCategoryController, MissionTimelineController],
+  controllers: [
+    MissionController,
+    MissionCategoryController,
+    UserController,
+    ObjectMissionCategoryController,
+    MissionTimelineController,
+    MissionFollowersController
+  ],
   providers: [
     MissionService,
     GetAllMissionsUseCase,
@@ -113,7 +128,11 @@ import { UpdateMissionTimelineUseCase } from './application/mission-timeline/upd
     MissionTimelineService,
     CreateMissionTimelineUseCase,
     GetMissionTimelineUseCase,
-    UpdateMissionTimelineUseCase
+    UpdateMissionTimelineUseCase,
+    MissionFollowersRepositoryImpl,
+    MissionFollowersService,
+    HandleMissionFollowerUseCase,
+    GetMissionFollowersCountUseCase
   ],
 })
 export class AppModule { }

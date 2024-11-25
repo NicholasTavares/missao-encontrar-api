@@ -21,6 +21,7 @@ import { PersonMissionModel } from '../person-mission/person-mission.model';
 import { PetMissionModel } from '../pet-mission/pet-mission.model';
 import { ObjectMissionModel } from '../object-mission/object-mission.model';
 import { MissionTimelineModel } from '../mission-timeline/mission-timeline.model';
+import { MissionFollowerModel } from '../mission-followers/mission-followers.model';
 
 @Entity('missions')
 export class MissionModel implements MissionEntity {
@@ -79,6 +80,9 @@ export class MissionModel implements MissionEntity {
     @ManyToMany(() => MissionCategoryModel, category => category.missions)
     @JoinTable({ name: 'mission_mission_categories', joinColumn: { name: 'mission_id' }, inverseJoinColumn: { name: 'category_id' } })
     categories: Relation<MissionCategoryModel>[];
+
+    @OneToMany(() => MissionFollowerModel, mission_follower_model => mission_follower_model.mission)
+    mission_followers?: Relation<MissionFollowerModel>[];
 
     @CreateDateColumn({ name: 'created_at', type: 'timestamp' })
     created_at: Date;

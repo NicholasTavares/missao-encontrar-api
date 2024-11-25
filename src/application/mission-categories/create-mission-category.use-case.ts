@@ -14,6 +14,6 @@ export class CreateMissionCategoryUseCase {
             return created_mission_category;
         } catch (error) {
             throw error;
-        }
-    }
-}
+        };
+    };
+};
