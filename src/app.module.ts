@@ -51,6 +51,12 @@ import { MissionFollowersController } from './presentation/mission-followers/mis
 import { MissionFollowersService } from './domain/mission-followers/mission-followers.service';
 import { HandleMissionFollowerUseCase } from './application/mission-followers/handle-mission-follower.use-case';
 import { GetMissionFollowersCountUseCase } from './application/mission-followers/get-misson-followers-count.use-case';
+import { MissionViewerModel } from './infrastructure/database/mission-viewers/mission-viewer.model';
+import { MissionViewersRepositoryImpl } from './infrastructure/database/mission-viewers/mission-viewers.repository';
+import { GetMissionViewersCountUseCase } from './application/mission-viewer/get-mission-viewers-count.use-case';
+import { MissionViewerService } from './domain/mission-viewers/mission-viewer.service';
+import { MissionViewersController } from './presentation/mission-viewers/mission-viewers.controller';
+import { CreateMissionViewerUseCase } from './application/mission-viewer/create-mission-viewers.user-case';
 
 @Module({
   imports: [
@@ -71,7 +77,8 @@ import { GetMissionFollowersCountUseCase } from './application/mission-followers
         RewardsEditionsModel,
         UserModel,
         MissionTimelineModel,
-        MissionFollowerModel
+        MissionFollowerModel,
+        MissionViewerModel
       ],
       synchronize: true,
       logging: true,
@@ -86,7 +93,8 @@ import { GetMissionFollowersCountUseCase } from './application/mission-followers
       RewardsEditionsModel,
       UserModel,
       MissionTimelineModel,
-      MissionFollowerModel
+      MissionFollowerModel,
+      MissionViewerModel
     ]),
   ],
   controllers: [
@@ -95,7 +103,8 @@ import { GetMissionFollowersCountUseCase } from './application/mission-followers
     UserController,
     ObjectMissionCategoryController,
     MissionTimelineController,
-    MissionFollowersController
+    MissionFollowersController,
+    MissionViewersController
   ],
   providers: [
     MissionService,
@@ -132,7 +141,11 @@ import { GetMissionFollowersCountUseCase } from './application/mission-followers
     MissionFollowersRepositoryImpl,
     MissionFollowersService,
     HandleMissionFollowerUseCase,
-    GetMissionFollowersCountUseCase
+    GetMissionFollowersCountUseCase,
+    MissionViewersRepositoryImpl,
+    MissionViewerService,
+    GetMissionViewersCountUseCase,
+    CreateMissionViewerUseCase
   ],
 })
 export class AppModule { }

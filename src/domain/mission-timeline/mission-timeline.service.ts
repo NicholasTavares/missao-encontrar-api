@@ -71,4 +71,4 @@ export class MissionTimelineService {
 
         return saved_mission_timeline;
     }
-}
+};

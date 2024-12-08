@@ -11,6 +11,7 @@ import {
 } from 'typeorm';
 import { MissionModel } from '../mission/mission.model';
 import { MissionTimelineModel } from '../mission-timeline/mission-timeline.model';
+import { MissionViewerModel } from '../mission-viewers/mission-viewer.model';
 
 @Entity('users')
 export class UserModel implements UserEntity {
@@ -37,6 +38,9 @@ export class UserModel implements UserEntity {
 
     @OneToMany(() => MissionTimelineModel, mission_timeline => mission_timeline.user)
     missions_timeline: Relation<MissionTimelineModel>[];
+
+    @OneToMany(() => MissionViewerModel, mission_viewer_model => mission_viewer_model.user)
+    missions_views: Relation<MissionViewerModel>[];
 
     @Column({ name: 'birth_date', type: 'timestamp' })
     birth_date: Date;

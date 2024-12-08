@@ -10,6 +10,7 @@ export class MissionEntity {
     latitude: number;
     longitude: number;
     status?: string;
+    views_count: number;
     created_at: Date;
     updated_at: Date;
     deleted_at?: Date;

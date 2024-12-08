@@ -136,4 +136,12 @@ export class MissionService {
 
         return saved_mission;
     };
+
+    async incremetMissionViewsCount(mission: MissionEntity, entityManager?: EntityManager) {
+        mission.views_count += 1;
+
+        const saved_mission = await this.missionRepository.saveMission(mission, entityManager);
+
+        return saved_mission;
+    }
 }

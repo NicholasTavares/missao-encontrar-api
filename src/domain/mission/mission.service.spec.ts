@@ -61,6 +61,7 @@ describe('MissionService', () => {
         user_id: "6c152c61-c0a8-44ed-b4d4-d3b3ef405446",
         lowest_reward: null,
         status: null,
+        views_count: 0,
         created_at: new Date("2024-11-10T14:29:33.263Z"),
         updated_at: new Date("2024-11-10T14:29:33.263Z"),
         deleted_at: null

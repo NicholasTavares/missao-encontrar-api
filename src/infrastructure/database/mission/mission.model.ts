@@ -22,6 +22,7 @@ import { PetMissionModel } from '../pet-mission/pet-mission.model';
 import { ObjectMissionModel } from '../object-mission/object-mission.model';
 import { MissionTimelineModel } from '../mission-timeline/mission-timeline.model';
 import { MissionFollowerModel } from '../mission-followers/mission-followers.model';
+import { MissionViewerModel } from '../mission-viewers/mission-viewer.model';
 
 @Entity('missions')
 export class MissionModel implements MissionEntity {
@@ -55,6 +56,9 @@ export class MissionModel implements MissionEntity {
     @Column({ nullable: true })
     status?: string;
 
+    @Column({ default: 0, name: 'views_count' })
+    views_count: number;
+
     @Column({ name: 'user_id' })
     user_id: string;
 
@@ -83,6 +87,9 @@ export class MissionModel implements MissionEntity {
 
     @OneToMany(() => MissionFollowerModel, mission_follower_model => mission_follower_model.mission)
     mission_followers?: Relation<MissionFollowerModel>[];
+
+    @OneToMany(() => MissionViewerModel, mission_viewer_model => mission_viewer_model.mission)
+    mission_viewers: Relation<MissionViewerModel>[];
 
     @CreateDateColumn({ name: 'created_at', type: 'timestamp' })
     created_at: Date;
