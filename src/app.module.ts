@@ -57,6 +57,9 @@ import { GetMissionViewersCountUseCase } from './application/mission-viewer/get-
 import { MissionViewerService } from './domain/mission-viewers/mission-viewer.service';
 import { MissionViewersController } from './presentation/mission-viewers/mission-viewers.controller';
 import { CreateMissionViewerUseCase } from './application/mission-viewer/create-mission-viewers.user-case';
+import { MissionDeleteReasonModel } from './infrastructure/database/mission-delete-reason/mission-delete-reason.model';
+import { MissionDeleteReasonRepositoryImpl } from './infrastructure/database/mission-delete-reason/mission-delete-reason.repository';
+import { MissionDeleteReasonService } from './domain/mission-delete-reason/mission-delete-reason.service';
 
 @Module({
   imports: [
@@ -78,7 +81,8 @@ import { CreateMissionViewerUseCase } from './application/mission-viewer/create-
         UserModel,
         MissionTimelineModel,
         MissionFollowerModel,
-        MissionViewerModel
+        MissionViewerModel,
+        MissionDeleteReasonModel
       ],
       synchronize: true,
       logging: true,
@@ -94,7 +98,8 @@ import { CreateMissionViewerUseCase } from './application/mission-viewer/create-
       UserModel,
       MissionTimelineModel,
       MissionFollowerModel,
-      MissionViewerModel
+      MissionViewerModel,
+      MissionDeleteReasonModel
     ]),
   ],
   controllers: [
@@ -145,7 +150,9 @@ import { CreateMissionViewerUseCase } from './application/mission-viewer/create-
     MissionViewersRepositoryImpl,
     MissionViewerService,
     GetMissionViewersCountUseCase,
-    CreateMissionViewerUseCase
+    CreateMissionViewerUseCase,
+    MissionDeleteReasonRepositoryImpl,
+    MissionDeleteReasonService
   ],
 })
 export class AppModule { }

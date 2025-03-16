@@ -23,6 +23,7 @@ import { ObjectMissionModel } from '../object-mission/object-mission.model';
 import { MissionTimelineModel } from '../mission-timeline/mission-timeline.model';
 import { MissionFollowerModel } from '../mission-followers/mission-followers.model';
 import { MissionViewerModel } from '../mission-viewers/mission-viewer.model';
+import { MissionDeleteReasonModel } from '../mission-delete-reason/mission-delete-reason.model';
 
 @Entity('missions')
 export class MissionModel implements MissionEntity {
@@ -77,6 +78,9 @@ export class MissionModel implements MissionEntity {
 
     @OneToOne(() => ObjectMissionModel, mission_details => mission_details.mission)
     mission_details_object?: Relation<ObjectMissionModel>;
+
+    @OneToOne(() => MissionDeleteReasonModel, mission_delete_reason => mission_delete_reason.mission)
+    mission_delete_reason?: Relation<MissionDeleteReasonModel>;
 
     @OneToMany(() => MissionTimelineModel, mission_timeline => mission_timeline.mission)
     mission_timeline?: Relation<MissionTimelineModel>[];
