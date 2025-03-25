@@ -9,4 +9,5 @@ export interface MissionRepository {
     createMission(mission: CreateMissionDTO, manager?: EntityManager);
     saveOnCreateMission(mission: MissionEntity, category: MissionCategoryEntity, manager?: EntityManager);
     saveMission(mission: MissionEntity, manager?: EntityManager);
+    deleteMission(mission_id: string, manager?: EntityManager);
 };

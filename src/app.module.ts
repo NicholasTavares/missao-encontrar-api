@@ -60,6 +60,7 @@ import { CreateMissionViewerUseCase } from './application/mission-viewer/create-
 import { MissionDeleteReasonModel } from './infrastructure/database/mission-delete-reason/mission-delete-reason.model';
 import { MissionDeleteReasonRepositoryImpl } from './infrastructure/database/mission-delete-reason/mission-delete-reason.repository';
 import { MissionDeleteReasonService } from './domain/mission-delete-reason/mission-delete-reason.service';
+import { DeleteMissionUseCase } from './application/mission/delete-mission.use-case';
 
 @Module({
   imports: [
@@ -152,7 +153,8 @@ import { MissionDeleteReasonService } from './domain/mission-delete-reason/missi
     GetMissionViewersCountUseCase,
     CreateMissionViewerUseCase,
     MissionDeleteReasonRepositoryImpl,
-    MissionDeleteReasonService
+    MissionDeleteReasonService,
+    DeleteMissionUseCase
   ],
 })
 export class AppModule { }

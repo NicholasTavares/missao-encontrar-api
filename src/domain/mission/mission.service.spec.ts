@@ -1,8 +1,9 @@
 import { MissionRepositoryImpl } from "src/infrastructure/database/mission/mission.repository";
 import { MissionService } from "./mission.service";
-import { CreateMissionDTO, UpdateMissionDTO, UpdateMissionRewardsDTO } from "src/presentation/mission/mission.dto";
+import { CreateMissionDTO, DeleteMissionDTO, UpdateMissionDTO, UpdateMissionRewardsDTO } from "src/presentation/mission/mission.dto";
 import { Test, TestingModule } from "@nestjs/testing";
 import { MissionEntity } from "./mission.entity";
+import { unescape } from "querystring";
 
 describe('MissionService', () => {
     let service: MissionService;
@@ -37,7 +38,13 @@ describe('MissionService', () => {
     const validUpdateMissionRewardsDTO: UpdateMissionRewardsDTO = {
         mission_id: "8a93966f-b04b-4b97-8195-7cb5a53a6c1a",
         reward: 89
-    }
+    };
+
+    const validDeleteMissionDTO: DeleteMissionDTO = {
+        mission_id: "8a93966f-b04b-4b97-8195-7cb5a53a6c1a",
+        user_id: "8a93966f-b04b-4b97-8195-7cb5a53a6c1a",
+        reason: "Razão de deleção da missão."
+    };
 
     const validMissionCategory = {
         category_id: "e171bb26-444a-4ffb-b802-595941433460",
@@ -80,6 +87,7 @@ describe('MissionService', () => {
                         saveOnCreateMission: jest.fn(),
                         saveMission: jest.fn(),
                         updateMissionRewards: jest.fn(),
+                        deleteMission: jest.fn()
                     },
                 },
             ],
@@ -379,5 +387,25 @@ describe('MissionService', () => {
                 current_reward: validUpdateMissionRewardsDTO.reward * 100
             });
         })
+    });
+
+    describe('deleteMission', () => {
+        it('should return true if mission is successfully deleted', async () => {
+            jest.spyOn(repository, 'deleteMission').mockResolvedValueOnce({ affected: 1 } as any);
+
+            const result = await service.deleteMission(validDeleteMissionDTO.mission_id, undefined);
+
+            expect(repository.deleteMission).toHaveBeenCalledWith(validDeleteMissionDTO.mission_id, undefined);
+            expect(result).toBe(true);
+        });
+
+        it('should return false if no mission was deleted', async () => {
+            jest.spyOn(repository, 'deleteMission').mockResolvedValueOnce({ affected: 0 } as any);
+
+            const result = await service.deleteMission(validDeleteMissionDTO.mission_id, undefined);
+
+            expect(repository.deleteMission).toHaveBeenCalledWith(validDeleteMissionDTO.mission_id, undefined);
+            expect(result).toBe(false);
+        });
     });
 });

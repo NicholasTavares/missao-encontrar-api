@@ -45,5 +45,12 @@ export class MissionRepositoryImpl implements MissionRepository {
 
     async saveMission(mission: MissionEntity, transactionManager?: EntityManager) {
         return transactionManager ? await transactionManager.save(MissionModel, mission) : await this.missionRepository.save(mission);
+    };
+
+    async deleteMission(mission_id: string, transactionManager?: EntityManager) {
+        return transactionManager ? await transactionManager.softDelete(MissionModel, { id: mission_id }) :
+            await this.missionRepository.softDelete({
+                id: mission_id
+            });
     }
 }

@@ -17,7 +17,7 @@ export class MissionService {
     async getAllMissions() {
         const missions = await this.missionRepository.getAllMissions();
         return missions;
-    }
+    };
 
     async getMissionById(mission_id: string, entityManager?: EntityManager) {
         const mission = await this.missionRepository.getMissionById(mission_id, entityManager);
@@ -27,7 +27,7 @@ export class MissionService {
         };
 
         return mission;
-    }
+    };
 
     private convertToCents(current_reward: number): number {
         return Math.round(current_reward * 100);
@@ -143,5 +143,11 @@ export class MissionService {
         const saved_mission = await this.missionRepository.saveMission(mission, entityManager);
 
         return saved_mission;
-    }
+    };
+
+    async deleteMission(mission_id: string, entityManager?: EntityManager) {
+        const deletedMission = await this.missionRepository.deleteMission(mission_id, entityManager);
+
+        return Boolean(deletedMission.affected);
+    };
 }

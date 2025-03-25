@@ -1,9 +1,10 @@
-import { Body, Controller, Get, Patch, Post } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Patch, Post } from '@nestjs/common';
 import { CreateMissionUseCase } from 'src/application/mission/create-mission.use-case';
 import { GetAllMissionsUseCase } from 'src/application/mission/get-all-missions.use-case';
-import { MissionDTO, UpdateMissionDTO, UpdateMissionRewardsDTO } from './mission.dto';
+import { DeleteMissionDTO, MissionDTO, UpdateMissionDTO, UpdateMissionRewardsDTO } from './mission.dto';
 import { UpdateMissionsUseCase } from 'src/application/mission/update-mission.use-case';
 import { UpdateMissionsRewardsUseCase } from 'src/application/mission/update-mission-rewards.use-case';
+import { DeleteMissionUseCase } from 'src/application/mission/delete-mission.use-case';
 
 @Controller('v1/missions')
 export class MissionController {
@@ -11,7 +12,8 @@ export class MissionController {
         private readonly getAllMissionsUseCase: GetAllMissionsUseCase,
         private readonly createMissionUseCase: CreateMissionUseCase,
         private readonly updateMissionsUseCase: UpdateMissionsUseCase,
-        private readonly updateMissionsRewardsUseCase: UpdateMissionsRewardsUseCase
+        private readonly updateMissionsRewardsUseCase: UpdateMissionsRewardsUseCase,
+        private readonly deleteMissionUseCase: DeleteMissionUseCase,
     ) { }
 
     @Get()
@@ -35,6 +37,12 @@ export class MissionController {
     @Patch('rewards')
     async updateMissionRewards(@Body() body: UpdateMissionRewardsDTO) {
         const mission = await this.updateMissionsRewardsUseCase.execute(body);
+        return mission;
+    };
+
+    @Delete()
+    async deleteMission(@Body() body: DeleteMissionDTO) {
+        const mission = await this.deleteMissionUseCase.execute(body);
         return mission;
     };
 }

@@ -122,3 +122,17 @@ export class UpdateMissionRewardsDTO {
     @IsNumber()
     readonly reward: number;
 };
+
+export class DeleteMissionDTO {
+    @IsNotEmpty({ message: 'ID do usuário é obrigatório.' })
+    @IsString()
+    readonly user_id: string;
+
+    @IsNotEmpty({ message: 'ID da missão obrigatório.' })
+    @IsString()
+    readonly mission_id: string;
+
+    @IsNotEmpty({ message: 'Razão é obrigatória.' })
+    @IsString()
+    readonly reason: string;
+}
